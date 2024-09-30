@@ -860,7 +860,6 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                height: 30.h,
                                                 width: 80.w,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
@@ -886,7 +885,6 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                 )),
                                               ),
                                               Container(
-                                                height: 30.h,
                                                 width: 145.w,
                                                 decoration: BoxDecoration(
                                                     borderRadius:

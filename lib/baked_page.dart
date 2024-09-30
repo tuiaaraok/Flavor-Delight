@@ -819,7 +819,6 @@ class _BakedPageState extends State<BakedPage> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Container(
-                                                height: 30.h,
                                                 width: 80.w,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
@@ -844,7 +843,6 @@ class _BakedPageState extends State<BakedPage> {
                                                 )),
                                               ),
                                               Container(
-                                                height: 30.h,
                                                 width: 145.w,
                                                 decoration: BoxDecoration(
                                                     borderRadius:
