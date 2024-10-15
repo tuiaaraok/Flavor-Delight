@@ -671,17 +671,23 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                           countControllers[i]
                                                                               .text
                                                                     });
-                                                                    if (int.parse(_info[selectedValues[i]!.split(' ')[1]]!) -
+                                                                    List<String>
+                                                                        parts =
+                                                                        selectedValues[i]!
+                                                                            .split(" ");
+                                                                    String output = parts
+                                                                        .sublist(
+                                                                            1)
+                                                                        .join(
+                                                                            " ");
+                                                                    if (int.parse(selectedValues[i]!.split(' ')[0]) -
                                                                             int.parse(countControllers[i].text) ==
                                                                         0) {
-                                                                      _info.remove(selectedValues[
-                                                                              i]!
-                                                                          .split(
-                                                                              ' ')[1]!);
+                                                                      _info.remove(
+                                                                          output);
                                                                     } else {
-                                                                      _info[selectedValues[i]!
-                                                                              .split(' ')[
-                                                                          1]!] = (int.parse(_info[selectedValues[i]!.split(' ')[1]]!) -
+                                                                      _info[
+                                                                          output] = (int.parse(selectedValues[i]!.split(' ')[0]) -
                                                                               int.parse(countControllers[i].text))
                                                                           .toString();
                                                                     }
