@@ -2,12 +2,13 @@ import 'package:bakery/data/bakeg.dart';
 import 'package:bakery/data/boxes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class BakedPage extends StatefulWidget {
+  const BakedPage({super.key});
+
   @override
   State<StatefulWidget> createState() => _BakedPageState();
 }
@@ -16,7 +17,7 @@ class _BakedPageState extends State<BakedPage> {
   bool addbakeg = false;
   bool opencard = false;
   TextEditingController date = TextEditingController();
-  int current_index = -1;
+  int currentIndex = -1;
 
   List<TextEditingController> countProductControllers = [];
   List<TextEditingController> productNameControllers = [];
@@ -37,52 +38,23 @@ class _BakedPageState extends State<BakedPage> {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-        valueListenable:
-            Hive.box<Bakeg_Good>(HiveBoxes.bakeg_good).listenable(),
+        valueListenable: Hive.box<Bakeg_Good>(HiveBoxes.bakegGood).listenable(),
         builder: (context, Box<Bakeg_Good> box, _) {
           name.clear();
           for (int i = 0; i < box.values.length; i++) {
             int j = 0;
             String text = "";
-            box.getAt(i)!.good_bakeg!.forEach((action) {
-              if (j == box.getAt(i)!.good_bakeg!.length - 1) {
-                text += (action["count"]! + "-" + action["name"]!);
+            for (var action in box.getAt(i)!.goodBakeg!) {
+              if (j == box.getAt(i)!.goodBakeg!.length - 1) {
+                text += ("${action["count"]!}-${action["name"]!}");
               } else {
-                text += (action["count"]! + "-" + action["name"]! + ", ");
+                text += ("${action["count"]!}-${action["name"]!}, ");
               }
 
               j++;
-            });
+            }
             name.add(text);
           }
-          // bool isbox = box.isEmpty;
-          // for (int i = 0;
-          //     i < (!isbox ? box.getAt(0)!.good_bakeg!.length : 0);
-          //     i++) {
-          //   String elem = "";
-          //   for (int index = 0;
-          //       index < box.getAt(0)!.baked_goods![i].info_bakeg!.length;
-          //       index++) {
-          //     elem += box
-          //             .getAt(0)!
-          //             .baked_goods![i]
-          //             .info_bakeg![index]["count"]
-          //             .toString() +
-          //         " ";
-          //     elem += box
-          //         .getAt(0)!
-          //         .baked_goods![i]
-          //         .info_bakeg![index]["name"]
-          //         .toString();
-          //     if (index ==
-          //         box.getAt(0)!.baked_goods![i].info_bakeg!.length - 1) {
-          //       elem += "";
-          //     } else {
-          //       elem += ", ";
-          //     }
-          //   }
-          //   name.add(elem);
-          // }
 
           return Scaffold(
             body: Stack(
@@ -92,7 +64,7 @@ class _BakedPageState extends State<BakedPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: 70.h, bottom: 20.h),
-                        child: Container(
+                        child: SizedBox(
                           width: 380.w,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,8 +81,8 @@ class _BakedPageState extends State<BakedPage> {
                                 child: CircleAvatar(
                                   radius: 27.r,
                                   backgroundColor: addbakeg
-                                      ? Color(0xFF931E1E).withOpacity(0.5)
-                                      : Color(0xFF931E1E),
+                                      ? const Color(0xFF931E1E).withOpacity(0.5)
+                                      : const Color(0xFF931E1E),
                                   child: Icon(
                                     IconsaxPlusLinear.house_2,
                                     size: 27.h,
@@ -122,10 +94,10 @@ class _BakedPageState extends State<BakedPage> {
                           ),
                         ),
                       ),
-                      for (int i = 0; i < box.values.length; i++) ...[
+                      for (int i = box.values.length - 1; i >= 0; i--) ...[
                         GestureDetector(
                           onTap: () {
-                            current_index = i;
+                            currentIndex = i;
                             setState(() {});
                           },
                           child: Padding(
@@ -133,10 +105,11 @@ class _BakedPageState extends State<BakedPage> {
                             child: Container(
                               width: 300.w,
                               decoration: BoxDecoration(
-                                  color: Color(0xFF84853F),
-                                  border: current_index == i
+                                  color: const Color(0xFF84853F),
+                                  border: currentIndex == i
                                       ? Border.all(
-                                          color: Color(0xFF931E1E), width: 2.w)
+                                          color: const Color(0xFF931E1E),
+                                          width: 2.w)
                                       : null,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(12.r))),
@@ -150,7 +123,7 @@ class _BakedPageState extends State<BakedPage> {
                                       box.getAt(i)!.date.toString(),
                                       style: TextStyle(
                                           fontSize: 16.sp,
-                                          color: Color(0xFF931E1E)),
+                                          color: const Color(0xFF931E1E)),
                                     ),
                                   ),
                                   Padding(
@@ -170,11 +143,11 @@ class _BakedPageState extends State<BakedPage> {
                       ],
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 10.h),
-                        child: Container(
+                        child: SizedBox(
                           width: double.maxFinite,
                           child: Column(
                             children: [
-                              Container(
+                              SizedBox(
                                 width: 350.w,
                                 child: Text("Add new baked goods",
                                     style: TextStyle(
@@ -197,7 +170,7 @@ class _BakedPageState extends State<BakedPage> {
                                 },
                                 child: CircleAvatar(
                                   radius: 45.r,
-                                  backgroundColor: Color(0xFF931E1E),
+                                  backgroundColor: const Color(0xFF931E1E),
                                   child: Center(
                                     child: Icon(
                                       Icons.add,
@@ -208,17 +181,18 @@ class _BakedPageState extends State<BakedPage> {
                                 ),
                               ),
                               box.length == 0
-                                  ? Container(
+                                  ? SizedBox(
                                       height: 500.h,
                                       child: Center(
-                                        child: Container(
+                                        child: SizedBox(
                                           height: 100.h,
                                           child: Column(
                                             children: [
                                               Text(
                                                 "Empty",
                                                 style: TextStyle(
-                                                    color: Color(0xFF931E1E),
+                                                    color:
+                                                        const Color(0xFF931E1E),
                                                     fontSize: 24.sp),
                                               ),
                                               Text(
@@ -234,7 +208,7 @@ class _BakedPageState extends State<BakedPage> {
                                         ),
                                       ),
                                     )
-                                  : SizedBox.shrink()
+                                  : const SizedBox.shrink()
                             ],
                           ),
                         ),
@@ -269,7 +243,7 @@ class _BakedPageState extends State<BakedPage> {
                               width: 290.w,
                               height: 360.h,
                               decoration: BoxDecoration(
-                                  color: Color(0xFF931E1E),
+                                  color: const Color(0xFF931E1E),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.r))),
                               child: SingleChildScrollView(
@@ -297,12 +271,13 @@ class _BakedPageState extends State<BakedPage> {
                                           },
                                           child: CircleAvatar(
                                             radius: 15.r,
-                                            backgroundColor: Color(0xFFD9D9D9),
+                                            backgroundColor:
+                                                const Color(0xFFD9D9D9),
                                             child: Center(
                                               child: Icon(
                                                 Icons.clear,
                                                 size: 20.h,
-                                                color: Color(0xFF931E1E),
+                                                color: const Color(0xFF931E1E),
                                               ),
                                             ),
                                           ),
@@ -320,10 +295,11 @@ class _BakedPageState extends State<BakedPage> {
                                           decoration: BoxDecoration(
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(12.r)),
-                                              color: Color(0xFFD9D9D9)
+                                              color: const Color(0xFFD9D9D9)
                                                   .withOpacity(0.25),
                                               border: Border.all(
-                                                  color: Color(0xFF6C6D33),
+                                                  color:
+                                                      const Color(0xFF6C6D33),
                                                   width: 2.w)),
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
@@ -392,10 +368,11 @@ class _BakedPageState extends State<BakedPage> {
                                                       BorderRadius.all(
                                                           Radius.circular(
                                                               12.r)),
-                                                  color: Color(0xFFD9D9D9)
+                                                  color: const Color(0xFFD9D9D9)
                                                       .withOpacity(0.25),
                                                   border: Border.all(
-                                                      color: Color(0xFF6C6D33),
+                                                      color: const Color(
+                                                          0xFF6C6D33),
                                                       width: 2.w)),
                                               child: TextField(
                                                 textAlign: TextAlign.center,
@@ -443,10 +420,11 @@ class _BakedPageState extends State<BakedPage> {
                                                       BorderRadius.all(
                                                           Radius.circular(
                                                               12.r)),
-                                                  color: Color(0xFFD9D9D9)
+                                                  color: const Color(0xFFD9D9D9)
                                                       .withOpacity(0.25),
                                                   border: Border.all(
-                                                      color: Color(0xFF6C6D33),
+                                                      color: const Color(
+                                                          0xFF6C6D33),
                                                       width: 2.w)),
                                               child: Center(
                                                 child: TextField(
@@ -477,7 +455,7 @@ class _BakedPageState extends State<BakedPage> {
                                                     ),
                                                   ),
                                                   cursorColor:
-                                                      Color(0xFF6C6D33),
+                                                      const Color(0xFF6C6D33),
                                                   style: TextStyle(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,
@@ -524,7 +502,7 @@ class _BakedPageState extends State<BakedPage> {
                                                   child: CircleAvatar(
                                                     radius: 15.r,
                                                     backgroundColor:
-                                                        Color(0xFF6C6D33),
+                                                        const Color(0xFF6C6D33),
                                                     child: Center(
                                                       child: Icon(
                                                         Icons.add,
@@ -560,7 +538,7 @@ class _BakedPageState extends State<BakedPage> {
                                                                     12.5.w),
                                                         child: Container(
                                                           decoration: BoxDecoration(
-                                                              color: Color(
+                                                              color: const Color(
                                                                   0xFF84853F),
                                                               borderRadius: BorderRadius
                                                                   .all(Radius
@@ -595,16 +573,16 @@ class _BakedPageState extends State<BakedPage> {
                                                               _areAllFieldsFilled()
                                                                   ? () {
                                                                       List<Map<String, String>>
-                                                                          _new =
+                                                                          newElem =
                                                                           [];
                                                                       Map<String,
                                                                               String>
-                                                                          _info =
+                                                                          info =
                                                                           {};
                                                                       Box<Bakeg_Info>
                                                                           infoBox =
                                                                           Hive.box<Bakeg_Info>(
-                                                                              HiveBoxes.bakeg_info);
+                                                                              HiveBoxes.bakegInfo);
 
                                                                       if (infoBox
                                                                           .isEmpty) {
@@ -612,9 +590,10 @@ class _BakedPageState extends State<BakedPage> {
                                                                                 0;
                                                                             i < productNameControllers.length;
                                                                             i++) {
-                                                                          _info[productNameControllers[i].text] =
+                                                                          info[productNameControllers[i].text] =
                                                                               countProductControllers[i].text;
-                                                                          _new.add({
+                                                                          newElem
+                                                                              .add({
                                                                             "name":
                                                                                 productNameControllers[i].text,
                                                                             "count":
@@ -624,24 +603,25 @@ class _BakedPageState extends State<BakedPage> {
 
                                                                         infoBox.add(Bakeg_Info(
                                                                             info:
-                                                                                _info));
+                                                                                info));
                                                                       } else {
-                                                                        _info.addAll(infoBox
+                                                                        info.addAll(infoBox
                                                                             .getAt(0)!
                                                                             .info);
                                                                         for (int i =
                                                                                 0;
                                                                             i < productNameControllers.length;
                                                                             i++) {
-                                                                          if (_info
+                                                                          if (info
                                                                               .containsKey(productNameControllers[i].text)) {
-                                                                            _info[productNameControllers[i].text] =
-                                                                                (int.parse(countProductControllers[i].text) + int.parse(_info[productNameControllers[i].text]!)).toString();
+                                                                            info[productNameControllers[i].text] =
+                                                                                (int.parse(countProductControllers[i].text) + int.parse(info[productNameControllers[i].text]!)).toString();
                                                                           } else {
-                                                                            _info[productNameControllers[i].text] =
+                                                                            info[productNameControllers[i].text] =
                                                                                 countProductControllers[i].text;
                                                                           }
-                                                                          _new.add({
+                                                                          newElem
+                                                                              .add({
                                                                             "name":
                                                                                 productNameControllers[i].text,
                                                                             "count":
@@ -650,14 +630,14 @@ class _BakedPageState extends State<BakedPage> {
                                                                         }
                                                                         infoBox.putAt(
                                                                             0,
-                                                                            Bakeg_Info(info: _info));
+                                                                            Bakeg_Info(info: info));
                                                                       }
 
                                                                       box.add(Bakeg_Good(
                                                                           date: date
                                                                               .text,
-                                                                          good_bakeg:
-                                                                              _new));
+                                                                          goodBakeg:
+                                                                              newElem));
                                                                       countProductControllers
                                                                           .clear();
                                                                       productNameControllers
@@ -674,7 +654,7 @@ class _BakedPageState extends State<BakedPage> {
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: _areAllFieldsFilled()
-                                                                  ? Color(
+                                                                  ? const Color(
                                                                       0xFF84853F)
                                                                   : Colors.red,
                                                               borderRadius: BorderRadius
@@ -710,7 +690,7 @@ class _BakedPageState extends State<BakedPage> {
                           ),
                         ),
                       )
-                    : current_index != -1
+                    : currentIndex != -1
                         ? Container(
                             width: double.infinity,
                             height: 840.h,
@@ -720,7 +700,7 @@ class _BakedPageState extends State<BakedPage> {
                                 width: 290.w,
                                 height: 360.h,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF931E1E),
+                                    color: const Color(0xFF931E1E),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(20.r))),
                                 child: SingleChildScrollView(
@@ -739,18 +719,19 @@ class _BakedPageState extends State<BakedPage> {
                                                   fontSize: 24.sp)),
                                           InkWell(
                                             onTap: () {
-                                              current_index = -1;
+                                              currentIndex = -1;
                                               setState(() {});
                                             },
                                             child: CircleAvatar(
                                               radius: 15.r,
                                               backgroundColor:
-                                                  Color(0xFFD9D9D9),
+                                                  const Color(0xFFD9D9D9),
                                               child: Center(
                                                 child: Icon(
                                                   Icons.clear,
                                                   size: 20.h,
-                                                  color: Color(0xFF931E1E),
+                                                  color:
+                                                      const Color(0xFF931E1E),
                                                 ),
                                               ),
                                             ),
@@ -768,10 +749,11 @@ class _BakedPageState extends State<BakedPage> {
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(12.r)),
-                                                color: Color(0xFFD9D9D9)
+                                                color: const Color(0xFFD9D9D9)
                                                     .withOpacity(0.25),
                                                 border: Border.all(
-                                                    color: Color(0xFF6C6D33),
+                                                    color:
+                                                        const Color(0xFF6C6D33),
                                                     width: 2.w)),
                                             child: Padding(
                                                 padding: EdgeInsets.symmetric(
@@ -779,12 +761,12 @@ class _BakedPageState extends State<BakedPage> {
                                                 child: Center(
                                                   child: Text(
                                                       box
-                                                          .getAt(current_index)!
+                                                          .getAt(currentIndex)!
                                                           .date
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color:
-                                                              Color(0xFFCFCFCF),
+                                                          color: const Color(
+                                                              0xFFCFCFCF),
                                                           fontSize: 18.sp)),
                                                 )),
                                           ),
@@ -804,13 +786,13 @@ class _BakedPageState extends State<BakedPage> {
                                           ),
                                         ),
                                       ),
-                                      for (int i = 0;
-                                          i <
-                                              box
-                                                  .getAt(current_index)!
-                                                  .good_bakeg!
-                                                  .length;
-                                          i++) ...[
+                                      for (int i = box
+                                                  .getAt(currentIndex)!
+                                                  .goodBakeg!
+                                                  .length -
+                                              1;
+                                          i >= 0;
+                                          i--) ...[
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                               vertical: 10.h),
@@ -825,20 +807,22 @@ class _BakedPageState extends State<BakedPage> {
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 12.r)),
-                                                    color: Color(0xFFD9D9D9)
-                                                        .withOpacity(0.25),
+                                                    color:
+                                                        const Color(0xFFD9D9D9)
+                                                            .withOpacity(0.25),
                                                     border: Border.all(
-                                                        color:
-                                                            Color(0xFF6C6D33),
+                                                        color: const Color(
+                                                            0xFF6C6D33),
                                                         width: 2.w)),
                                                 child: Center(
                                                     child: Text(
                                                   box
-                                                      .getAt(current_index)!
-                                                      .good_bakeg![i]["count"]
+                                                      .getAt(currentIndex)!
+                                                      .goodBakeg![i]["count"]
                                                       .toString(),
                                                   style: TextStyle(
-                                                      color: Color(0xFFCFCFCF),
+                                                      color: const Color(
+                                                          0xFFCFCFCF),
                                                       fontSize: 18.sp),
                                                 )),
                                               ),
@@ -849,22 +833,23 @@ class _BakedPageState extends State<BakedPage> {
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 12.r)),
-                                                    color: Color(0xFFD9D9D9)
-                                                        .withOpacity(0.25),
+                                                    color:
+                                                        const Color(0xFFD9D9D9)
+                                                            .withOpacity(0.25),
                                                     border: Border.all(
-                                                        color:
-                                                            Color(0xFF6C6D33),
+                                                        color: const Color(
+                                                            0xFF6C6D33),
                                                         width: 2.w)),
                                                 child: Center(
                                                     child: Text(
                                                         box
                                                             .getAt(
-                                                                current_index)!
-                                                            .good_bakeg![i]
+                                                                currentIndex)!
+                                                            .goodBakeg![i]
                                                                 ["name"]
                                                             .toString(),
                                                         style: TextStyle(
-                                                            color: Color(
+                                                            color: const Color(
                                                                 0xFFCFCFCF),
                                                             fontSize: 18.sp))),
                                               ),
@@ -880,7 +865,7 @@ class _BakedPageState extends State<BakedPage> {
                                           child: SizedBox(
                                             child: InkWell(
                                               onTap: () {
-                                                current_index = -1;
+                                                currentIndex = -1;
                                                 setState(() {});
                                               },
                                               child: SizedBox(
@@ -891,8 +876,8 @@ class _BakedPageState extends State<BakedPage> {
                                                       horizontal: 12.5.w),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xFF84853F),
+                                                        color: const Color(
+                                                            0xFF84853F),
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
@@ -928,16 +913,17 @@ class _BakedPageState extends State<BakedPage> {
 class YourWidget extends StatelessWidget {
   final bool opencard;
   final List<String> name;
-  final int current_index;
+  final int currentIndex;
 
-  YourWidget(
-      {required this.opencard,
+  const YourWidget(
+      {super.key,
+      required this.opencard,
       required this.name,
-      required this.current_index});
+      required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
-    List<String> items = name[current_index]
+    List<String> items = name[currentIndex]
         .replaceAll(', ', ' ') // Убираем запятые, чтобы использовать split
         .split(' '); // Разделяем строку по пробелам
 
@@ -951,7 +937,7 @@ class YourWidget extends StatelessWidget {
                 width: 290.w,
                 height: 500.h,
                 decoration: BoxDecoration(
-                  color: Color(0xFF931E1E),
+                  color: const Color(0xFF931E1E),
                   borderRadius: BorderRadius.all(Radius.circular(20.r)),
                 ),
                 child: Wrap(

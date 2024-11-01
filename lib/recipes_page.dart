@@ -2,7 +2,6 @@ import 'package:bakery/data/boxes.dart';
 import 'package:bakery/data/recipes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -23,7 +22,7 @@ class _RecipesPageState extends State<RecipesPage> {
   final FocusNode _nodeText2 = FocusNode(); // FocusNode для второго TextField
 
   bool addrecept = false;
-  int current_index = -1;
+  int currentIndex = -1;
 
   _updateFormCompletion() {
     bool isFilled =
@@ -59,9 +58,7 @@ class _RecipesPageState extends State<RecipesPage> {
                 ),
                 KeyboardActionsItem(
                   focusNode: _nodeText2,
-                  onTapAction: () {
-                    print(notesController.text);
-                  },
+                  onTapAction: () {},
                 ),
               ]),
               child: SafeArea(
@@ -90,8 +87,9 @@ class _RecipesPageState extends State<RecipesPage> {
                                     child: CircleAvatar(
                                       radius: 27.r,
                                       backgroundColor: addrecept
-                                          ? Color(0xFF931E1E).withOpacity(0.5)
-                                          : Color(0xFF931E1E),
+                                          ? const Color(0xFF931E1E)
+                                              .withOpacity(0.5)
+                                          : const Color(0xFF931E1E),
                                       child: Icon(
                                         IconsaxPlusLinear.house_2,
                                         size: 27.h,
@@ -101,23 +99,23 @@ class _RecipesPageState extends State<RecipesPage> {
                                   ),
                                 ]),
                           ),
-                          for (int i = 0; i < box.values.length; i++) ...[
+                          for (int i = box.values.length - 1; i >= 0; i--) ...[
                             Padding(
                               padding: EdgeInsets.only(right: 20.w, top: 10.h),
                               child: AnimatedContainer(
                                 duration: const Duration(milliseconds: 300),
-                                width: current_index != -1 ? 330.w : 300.w,
-                                child: current_index != i
+                                width: currentIndex != -1 ? 330.w : 300.w,
+                                child: currentIndex != i
                                     ? InkWell(
                                         onTap: () {
-                                          current_index = i;
+                                          currentIndex = i;
 
                                           setState(() {});
                                         },
                                         child: Container(
                                           height: 40.h,
                                           decoration: BoxDecoration(
-                                              color: Color(0xFF84853F),
+                                              color: const Color(0xFF84853F),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(12.r))),
                                           child: Center(
@@ -133,7 +131,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                       )
                                     : Container(
                                         decoration: BoxDecoration(
-                                            color: Color(0xFF931E1E),
+                                            color: const Color(0xFF931E1E),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.r))),
                                         child: Padding(
@@ -149,7 +147,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                                       BorderRadius.all(
                                                           Radius.circular(
                                                               12.r)),
-                                                  color: Color(0xFFD9D9D9)
+                                                  color: const Color(0xFFD9D9D9)
                                                       .withOpacity(0.25),
                                                 ),
                                                 child: Padding(
@@ -179,8 +177,9 @@ class _RecipesPageState extends State<RecipesPage> {
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 12.r)),
-                                                    color: Color(0xFFD9D9D9)
-                                                        .withOpacity(0.25),
+                                                    color:
+                                                        const Color(0xFFD9D9D9)
+                                                            .withOpacity(0.25),
                                                   ),
                                                   child: Padding(
                                                       padding:
@@ -201,7 +200,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                                     vertical: 20.h),
                                                 child: InkWell(
                                                   onTap: () {
-                                                    current_index = -1;
+                                                    currentIndex = -1;
 
                                                     _nodeText1.unfocus();
                                                     _nodeText2.unfocus();
@@ -211,7 +210,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                     width: 120.w,
                                                     height: 40.h,
                                                     decoration: BoxDecoration(
-                                                      color: Color(0xFF84853F),
+                                                      color: const Color(
+                                                          0xFF84853F),
                                                       borderRadius:
                                                           BorderRadius.all(
                                                               Radius.circular(
@@ -239,14 +239,14 @@ class _RecipesPageState extends State<RecipesPage> {
                             ),
                           ],
                           addrecept
-                              ? SizedBox.shrink()
+                              ? const SizedBox.shrink()
                               : Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10.h),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: double.maxFinite,
                                     child: Column(
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           width: 350.w,
                                           child: Text(
                                               "Add new sold baked goods ",
@@ -265,7 +265,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                           },
                                           child: CircleAvatar(
                                             radius: 45.r,
-                                            backgroundColor: Color(0xFF931E1E),
+                                            backgroundColor:
+                                                const Color(0xFF931E1E),
                                             child: Center(
                                               child: Icon(
                                                 Icons.add,
@@ -283,7 +284,7 @@ class _RecipesPageState extends State<RecipesPage> {
                       ),
                     ),
                     addrecept
-                        ? Container(
+                        ? SizedBox(
                             width: double.infinity,
                             height: 840.h,
                             child: Center(
@@ -291,7 +292,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                 height: 370.h,
                                 width: 330.w,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF931E1E),
+                                    color: const Color(0xFF931E1E),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(12.r))),
                                 child: Padding(
@@ -305,7 +306,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(12.r)),
-                                          color: Color(0xFFDD9D9D9)
+                                          // ignore: use_full_hex_values_for_flutter_colors
+                                          color: const Color(0xffdd9d9d9)
                                               .withOpacity(0.25),
                                         ),
                                         child: Padding(
@@ -350,7 +352,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.r)),
-                                            color: Color(0xFFD9D9D9)
+                                            color: const Color(0xFFD9D9D9)
                                                 .withOpacity(0.25),
                                           ),
                                           child: Padding(
@@ -378,7 +380,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                       color: Colors.white
                                                           .withOpacity(0.25),
                                                       fontSize: 18.sp)),
-                                              cursorColor: Color(0xFF6C6D33),
+                                              cursorColor:
+                                                  const Color(0xFF6C6D33),
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold,
@@ -408,7 +411,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                 width: 120.w,
                                                 height: 40.h,
                                                 decoration: BoxDecoration(
-                                                  color: Color(0xFF84853F),
+                                                  color:
+                                                      const Color(0xFF84853F),
                                                   borderRadius:
                                                       BorderRadius.all(
                                                           Radius.circular(
@@ -444,8 +448,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                 height: 40.h,
                                                 decoration: BoxDecoration(
                                                   color: _updateFormCompletion()
-                                                      ? Color(0xFF84853F)
-                                                      : Color.fromARGB(
+                                                      ? const Color(0xFF84853F)
+                                                      : const Color.fromARGB(
                                                           255, 48, 49, 5),
                                                   borderRadius:
                                                       BorderRadius.all(
@@ -473,7 +477,7 @@ class _RecipesPageState extends State<RecipesPage> {
                               ),
                             ),
                           )
-                        : SizedBox.shrink()
+                        : const SizedBox.shrink()
                   ],
                 ),
               ),

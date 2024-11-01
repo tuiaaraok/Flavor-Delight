@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:bakery/baked_page.dart';
 import 'package:bakery/data/bakeg.dart';
 import 'package:bakery/data/boxes.dart';
-import 'package:bakery/data/recipes.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class WriteOfBakeg extends StatefulWidget {
-  WriteOfBakeg({super.key});
+  const WriteOfBakeg({super.key});
 
   @override
   State<WriteOfBakeg> createState() => _WriteOfBakegState();
@@ -30,11 +26,11 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
   List<String?> selectedValues = [];
   TextEditingController date = TextEditingController();
   List<TextEditingController> countControllers = [];
-  List<String> name_sol = [];
+  List<String> nameSol = [];
 
   List<FocusNode> focusNodes1 = [];
   List<CardHelper> cards = [];
-  int current_index = -1;
+  int currentIndex = -1;
   bool addbakeg = false;
   bool opencard = false;
   bool imit = false;
@@ -58,15 +54,15 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
     return Scaffold(
       body: ValueListenableBuilder(
           valueListenable:
-              Hive.box<Bakeg_Write_Of>(HiveBoxes.bakeg_write_of).listenable(),
+              Hive.box<Bakeg_Write_Of>(HiveBoxes.bakegWriteOf).listenable(),
           builder: (context, Box<Bakeg_Write_Of> box, _) {
             if (!imit) {
               name.clear();
               Box<Bakeg_Info> infoBox =
-                  Hive.box<Bakeg_Info>(HiveBoxes.bakeg_info);
+                  Hive.box<Bakeg_Info>(HiveBoxes.bakegInfo);
               if (infoBox.isNotEmpty) {
                 infoBox.values.last.info.forEach((key, value) {
-                  name.add(value + " " + key);
+                  name.add("$value $key");
                 });
 
                 cards = List.generate(name.length,
@@ -74,20 +70,20 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                 imit = true;
               }
             }
-            name_sol.clear();
+            nameSol.clear();
             for (int i = 0; i < box.values.length; i++) {
               int j = 0;
               String text = "";
-              box.getAt(i)!.write_of_bakeg!.forEach((action) {
-                if (j == box.getAt(i)!.write_of_bakeg!.length - 1) {
-                  text += (action["count"]! + "-" + action["name"]!);
+              for (var action in box.getAt(i)!.writeOfBakeg!) {
+                if (j == box.getAt(i)!.writeOfBakeg!.length - 1) {
+                  text += ("${action["count"]!}-${action["name"]!}");
                 } else {
-                  text += (action["count"]! + "-" + action["name"]! + ", ");
+                  text += ("${action["count"]!}-${action["name"]!}, ");
                 }
 
                 j++;
-              });
-              name_sol.add(text);
+              }
+              nameSol.add(text);
             }
 
             return Stack(
@@ -96,13 +92,13 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                   padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: SingleChildScrollView(
                     physics: addbakeg
-                        ? NeverScrollableScrollPhysics()
-                        : ScrollPhysics(),
+                        ? const NeverScrollableScrollPhysics()
+                        : const ScrollPhysics(),
                     child: Column(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(top: 70.h, bottom: 20.h),
-                          child: Container(
+                          child: SizedBox(
                             width: 380.w,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,8 +115,9 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                   child: CircleAvatar(
                                     radius: 27.r,
                                     backgroundColor: addbakeg
-                                        ? Color(0xFF931E1E).withOpacity(0.5)
-                                        : Color(0xFF931E1E),
+                                        ? const Color(0xFF931E1E)
+                                            .withOpacity(0.5)
+                                        : const Color(0xFF931E1E),
                                     child: Icon(
                                       IconsaxPlusLinear.house_2,
                                       size: 27.h,
@@ -132,10 +129,10 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                             ),
                           ),
                         ),
-                        for (int i = 0; i < box.values.length; i++) ...[
+                        for (int i = box.values.length - 1; i >= 0; i--) ...[
                           GestureDetector(
                             onTap: () {
-                              current_index = i;
+                              currentIndex = i;
                               setState(() {});
                             },
                             child: Padding(
@@ -143,10 +140,10 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                               child: Container(
                                 width: 300.w,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF931E1E),
-                                    border: current_index == i
+                                    color: const Color(0xFF931E1E),
+                                    border: currentIndex == i
                                         ? Border.all(
-                                            color: Color(0xFF84853F),
+                                            color: const Color(0xFF84853F),
                                             width: 2.w)
                                         : null,
                                     borderRadius: BorderRadius.all(
@@ -161,14 +158,14 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                         box.getAt(i)!.date.toString(),
                                         style: TextStyle(
                                             fontSize: 16.sp,
-                                            color: Color(0xFF6C6D33)),
+                                            color: const Color(0xFF6C6D33)),
                                       ),
                                     ),
                                     Padding(
                                       padding: EdgeInsets.symmetric(
                                           vertical: 2.h, horizontal: 10.w),
                                       child: Text(
-                                        name_sol[i],
+                                        nameSol[i],
                                         style: TextStyle(
                                             fontSize: 18.sp,
                                             color: Colors.white),
@@ -182,11 +179,11 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                         ],
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 10.h),
-                          child: Container(
+                          child: SizedBox(
                             width: double.maxFinite,
                             child: Column(
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 350.w,
                                   child: Text("Add new sold baked goods ",
                                       style: TextStyle(
@@ -206,7 +203,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                   },
                                   child: CircleAvatar(
                                     radius: 45.r,
-                                    backgroundColor: Color(0xFF931E1E),
+                                    backgroundColor: const Color(0xFF931E1E),
                                     child: Center(
                                       child: Icon(
                                         Icons.add,
@@ -228,7 +225,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                     Text(
                                       "Empty",
                                       style: TextStyle(
-                                          color: Color(0xFF931E1E),
+                                          color: const Color(0xFF931E1E),
                                           fontSize: 24.sp),
                                     ),
                                     Text(
@@ -241,7 +238,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                     Container(
                                       height: 200.h,
                                       width: 200.h,
-                                      decoration: BoxDecoration(
+                                      decoration: const BoxDecoration(
                                           image: DecorationImage(
                                               image: AssetImage(
                                                   "assets/empty.png"))),
@@ -249,7 +246,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                   ],
                                 ),
                               )
-                            : SizedBox.shrink()
+                            : const SizedBox.shrink()
                       ],
                     ),
                   ),
@@ -278,7 +275,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                 width: 310.w,
                                 height: 500.h,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF84853F),
+                                    color: const Color(0xFF84853F),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(20.r))),
                                 child: SingleChildScrollView(
@@ -306,12 +303,13 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                               child: CircleAvatar(
                                                 radius: 15.r,
                                                 backgroundColor:
-                                                    Color(0xFFD9D9D9),
+                                                    const Color(0xFFD9D9D9),
                                                 child: Center(
                                                   child: Icon(
                                                     Icons.clear,
                                                     size: 20.h,
-                                                    color: Color(0xFF931E1E),
+                                                    color:
+                                                        const Color(0xFF931E1E),
                                                   ),
                                                 ),
                                               ),
@@ -329,7 +327,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(12.r)),
-                                                color: Color(0xFFD9D9D9),
+                                                color: const Color(0xFFD9D9D9),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.symmetric(
@@ -347,7 +345,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                         hintStyle: TextStyle(
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            color: Color(
+                                                            color: const Color(
                                                                     0xFF6C6D33)
                                                                 .withOpacity(
                                                                     0.5),
@@ -357,8 +355,8 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                     cursorColor:
                                                         Colors.transparent,
                                                     style: TextStyle(
-                                                        color:
-                                                            Color(0xFF6C6D33),
+                                                        color: const Color(
+                                                            0xFF6C6D33),
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         fontSize: 18.sp),
@@ -419,7 +417,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                   padding: EdgeInsets.symmetric(
                                                       horizontal: 10.w,
                                                       vertical: 10.h),
-                                                  child: Container(
+                                                  child: SizedBox(
                                                     width: 250.w,
                                                     child: Row(
                                                       mainAxisAlignment:
@@ -471,7 +469,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                           0xFF6C6D33)
                                                                       .withOpacity(
                                                                           0.5),
@@ -485,7 +483,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                               cursorColor: Colors
                                                                   .transparent,
                                                               style: TextStyle(
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFF6C6D33),
                                                                 fontWeight:
                                                                     FontWeight
@@ -510,7 +508,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                     .all(Radius
                                                                         .circular(12
                                                                             .r)),
-                                                                color: Color(
+                                                                color: const Color(
                                                                     0xFFD9D9D9)),
                                                             child: Center(
                                                               child: Text(
@@ -519,7 +517,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                     .split(
                                                                         ' ')[1],
                                                                 style: TextStyle(
-                                                                    color: Color(
+                                                                    color: const Color(
                                                                         0xFF6C6D33),
                                                                     fontSize:
                                                                         16.sp),
@@ -563,7 +561,8 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                       child: CircleAvatar(
                                                         radius: 15.r,
                                                         backgroundColor:
-                                                            Color(0xFF6C6D33),
+                                                            const Color(
+                                                                0xFF6C6D33),
                                                         child: Center(
                                                           child: Icon(
                                                             Icons.add,
@@ -600,7 +599,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                         12.5.w),
                                                             child: Container(
                                                               decoration: BoxDecoration(
-                                                                  color: Color(
+                                                                  color: const Color(
                                                                       0xFF931E1E),
                                                                   borderRadius:
                                                                       BorderRadius.all(
@@ -635,23 +634,18 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                 GestureDetector(
                                                               onTap: () {
                                                                 if (_areAllFieldsFilled()) {
-                                                                  Box<Bakeg_Sold>
-                                                                      soldBox =
-                                                                      Hive.box<
-                                                                              Bakeg_Sold>(
-                                                                          HiveBoxes
-                                                                              .bakeg_sold);
                                                                   Box<Bakeg_Info>
                                                                       infoBox =
                                                                       Hive.box<
                                                                               Bakeg_Info>(
                                                                           HiveBoxes
-                                                                              .bakeg_info);
+                                                                              .bakegInfo);
                                                                   List<Map<String, String>>
-                                                                      _new = [];
+                                                                      newElem =
+                                                                      [];
                                                                   Map<String,
                                                                           String>
-                                                                      _info =
+                                                                      info =
                                                                       infoBox
                                                                           .getAt(
                                                                               0)!
@@ -662,7 +656,8 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                           selectedValues
                                                                               .length;
                                                                       i++) {
-                                                                    _new.add({
+                                                                    newElem
+                                                                        .add({
                                                                       "name": selectedValues[
                                                                               i]!
                                                                           .split(
@@ -683,10 +678,10 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                     if (int.parse(selectedValues[i]!.split(' ')[0]) -
                                                                             int.parse(countControllers[i].text) ==
                                                                         0) {
-                                                                      _info.remove(
+                                                                      info.remove(
                                                                           output);
                                                                     } else {
-                                                                      _info[
+                                                                      info[
                                                                           output] = (int.parse(selectedValues[i]!.split(' ')[0]) -
                                                                               int.parse(countControllers[i].text))
                                                                           .toString();
@@ -695,13 +690,13 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                   box.add(Bakeg_Write_Of(
                                                                       date: date
                                                                           .text,
-                                                                      write_of_bakeg:
-                                                                          _new));
+                                                                      writeOfBakeg:
+                                                                          newElem));
                                                                   infoBox.putAt(
                                                                       0,
                                                                       Bakeg_Info(
                                                                           info:
-                                                                              _info));
+                                                                              info));
                                                                   addbakeg =
                                                                       false;
                                                                   imit = false;
@@ -718,9 +713,10 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                                 decoration:
                                                                     BoxDecoration(
                                                                   color: _areAllFieldsFilled()
-                                                                      ? Color(
+                                                                      ? const Color(
                                                                           0xFF931E1E)
-                                                                      : Color(0xFF931E1E)
+                                                                      : const Color(
+                                                                              0xFF931E1E)
                                                                           .withOpacity(
                                                                               0.5),
                                                                   borderRadius:
@@ -757,7 +753,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                             ),
                           ),
                         ))
-                    : current_index != -1
+                    : currentIndex != -1
                         ? Container(
                             width: double.infinity,
                             height: 840.h,
@@ -767,7 +763,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                 width: 290.w,
                                 height: 360.h,
                                 decoration: BoxDecoration(
-                                    color: Color(0xFF6C6D33),
+                                    color: const Color(0xFF6C6D33),
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(20.r))),
                                 child: SingleChildScrollView(
@@ -786,18 +782,19 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                   fontSize: 24.sp)),
                                           InkWell(
                                             onTap: () {
-                                              current_index = -1;
+                                              currentIndex = -1;
                                               setState(() {});
                                             },
                                             child: CircleAvatar(
                                               radius: 15.r,
                                               backgroundColor:
-                                                  Color(0xFFD9D9D9),
+                                                  const Color(0xFFD9D9D9),
                                               child: Center(
                                                 child: Icon(
                                                   Icons.clear,
                                                   size: 20.h,
-                                                  color: Color(0xFF931E1E),
+                                                  color:
+                                                      const Color(0xFF931E1E),
                                                 ),
                                               ),
                                             ),
@@ -815,10 +812,11 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                             decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(12.r)),
-                                                color: Color(0xFFD9D9D9)
+                                                color: const Color(0xFFD9D9D9)
                                                     .withOpacity(0.25),
                                                 border: Border.all(
-                                                    color: Color(0xFF6C6D33),
+                                                    color:
+                                                        const Color(0xFF6C6D33),
                                                     width: 2.w)),
                                             child: Padding(
                                                 padding: EdgeInsets.symmetric(
@@ -826,12 +824,12 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                 child: Center(
                                                   child: Text(
                                                       box
-                                                          .getAt(current_index)!
+                                                          .getAt(currentIndex)!
                                                           .date
                                                           .toString(),
                                                       style: TextStyle(
-                                                          color:
-                                                              Color(0xFFCFCFCF),
+                                                          color: const Color(
+                                                              0xFFCFCFCF),
                                                           fontSize: 18.sp)),
                                                 )),
                                           ),
@@ -854,8 +852,8 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                       for (int i = 0;
                                           i <
                                               box
-                                                  .getAt(current_index)!
-                                                  .write_of_bakeg!
+                                                  .getAt(currentIndex)!
+                                                  .writeOfBakeg!
                                                   .length;
                                           i++) ...[
                                         Padding(
@@ -872,21 +870,22 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 12.r)),
-                                                    color: Color(0xFFD9D9D9)
-                                                        .withOpacity(0.25),
+                                                    color:
+                                                        const Color(0xFFD9D9D9)
+                                                            .withOpacity(0.25),
                                                     border: Border.all(
-                                                        color:
-                                                            Color(0xFF6C6D33),
+                                                        color: const Color(
+                                                            0xFF6C6D33),
                                                         width: 2.w)),
                                                 child: Center(
                                                     child: Text(
                                                   box
-                                                      .getAt(current_index)!
-                                                      .write_of_bakeg![i]
-                                                          ["count"]
+                                                      .getAt(currentIndex)!
+                                                      .writeOfBakeg![i]["count"]
                                                       .toString(),
                                                   style: TextStyle(
-                                                      color: Color(0xFFCFCFCF),
+                                                      color: const Color(
+                                                          0xFFCFCFCF),
                                                       fontSize: 18.sp),
                                                 )),
                                               ),
@@ -897,22 +896,23 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                         BorderRadius.all(
                                                             Radius.circular(
                                                                 12.r)),
-                                                    color: Color(0xFFD9D9D9)
-                                                        .withOpacity(0.25),
+                                                    color:
+                                                        const Color(0xFFD9D9D9)
+                                                            .withOpacity(0.25),
                                                     border: Border.all(
-                                                        color:
-                                                            Color(0xFF6C6D33),
+                                                        color: const Color(
+                                                            0xFF6C6D33),
                                                         width: 2.w)),
                                                 child: Center(
                                                     child: Text(
                                                         box
                                                             .getAt(
-                                                                current_index)!
-                                                            .write_of_bakeg![i]
+                                                                currentIndex)!
+                                                            .writeOfBakeg![i]
                                                                 ["name"]
                                                             .toString(),
                                                         style: TextStyle(
-                                                            color: Color(
+                                                            color: const Color(
                                                                 0xFFCFCFCF),
                                                             fontSize: 18.sp))),
                                               ),
@@ -928,7 +928,7 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                           child: SizedBox(
                                             child: InkWell(
                                               onTap: () {
-                                                current_index = -1;
+                                                currentIndex = -1;
                                                 setState(() {});
                                               },
                                               child: SizedBox(
@@ -939,8 +939,8 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                                       horizontal: 12.5.w),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xFF931E1E),
+                                                        color: const Color(
+                                                            0xFF931E1E),
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
@@ -1000,14 +1000,14 @@ class _CardWidgetState extends State<CardWidget> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          color: Color(0xFF6C6D33),
+          color: const Color(0xFF6C6D33),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               DropdownButtonHideUnderline(
                   child: DropdownButton2(
                 isExpanded: true,
-                hint: Row(
+                hint: const Row(
                   children: [
                     Expanded(
                       child: Center(
@@ -1027,7 +1027,7 @@ class _CardWidgetState extends State<CardWidget> {
                               width: 247.w,
                               height: 30.h,
                               decoration: BoxDecoration(
-                                  color: Color(0xFF6C6D33),
+                                  color: const Color(0xFF6C6D33),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20.r))),
                               child: Center(
@@ -1043,13 +1043,13 @@ class _CardWidgetState extends State<CardWidget> {
                 dropdownStyleData: DropdownStyleData(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
-                    color: Color(0xFFD9D9D9).withOpacity(0.25),
+                    color: const Color(0xFFD9D9D9).withOpacity(0.25),
                   ),
                   offset: Offset(0, -10.h),
                   scrollbarTheme: ScrollbarThemeData(
                     radius: const Radius.circular(40),
-                    thickness: MaterialStateProperty.all(6),
-                    thumbVisibility: MaterialStateProperty.all(true),
+                    thickness: WidgetStateProperty.all(6),
+                    thumbVisibility: WidgetStateProperty.all(true),
                   ),
                 ),
                 value: selectedValue,

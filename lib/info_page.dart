@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
@@ -5,12 +7,14 @@ import 'package:launch_review/launch_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InfoPage extends StatelessWidget {
+  const InfoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           child: Column(
             children: [
@@ -36,7 +40,7 @@ class InfoPage extends StatelessWidget {
                   child: Container(
                     width: 300.h,
                     height: 300.h,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         image: DecorationImage(
                             fit: BoxFit.fitHeight,
                             image: AssetImage("assets/info.png"))),
@@ -60,7 +64,7 @@ class InfoPage extends StatelessWidget {
                           // ···
                           final Uri emailLaunchUri = Uri(
                             scheme: 'mailto',
-                            path: 'TravisJohnson9902@outlook.com',
+                            path: 'stephaniasvetkova@moberes.space',
                             query: encodeQueryParameters(<String, String>{
                               '': '',
                             }),
@@ -73,15 +77,14 @@ class InfoPage extends StatelessWidget {
                                   "Could not launch $emailLaunchUri");
                             }
                           } catch (e) {
-                            print(
-                                'Error launching email client: $e'); // Log the error
+                            log('Error launching email client: $e'); // Log the error
                           }
                         },
                         child: Container(
                           width: 310.w,
                           height: 55.h,
                           decoration: BoxDecoration(
-                              color: Color(0xFF931E1E),
+                              color: const Color(0xFF931E1E),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12.r))),
                           child: Row(
@@ -95,7 +98,7 @@ class InfoPage extends StatelessWidget {
                                 size: 32.h,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                   width:
                                       8), // Добавьте немного пространства между иконкой и текстом
                               Expanded(
@@ -127,16 +130,17 @@ class InfoPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () async {
-                          final Uri _url = Uri.parse('https://flutter.dev');
-                          if (!await launchUrl(_url)) {
-                            throw Exception('Could not launch $_url');
+                          final Uri url = Uri.parse(
+                              'https://docs.google.com/document/d/13kh15yyfp5Zv9RKe2p8Pv5tmQQTqc1zdmJOFjH7wlm4/mobilebasic');
+                          if (!await launchUrl(url)) {
+                            throw Exception('Could not launch $url');
                           }
                         },
                         child: Container(
                           width: 310.w,
                           height: 55.h,
                           decoration: BoxDecoration(
-                              color: Color(0xFF931E1E),
+                              color: const Color(0xFF931E1E),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12.r))),
                           child: Row(
@@ -150,7 +154,7 @@ class InfoPage extends StatelessWidget {
                                 size: 32.h,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                   width:
                                       8), // Добавьте немного пространства между иконкой и текстом
                               Expanded(
@@ -182,15 +186,13 @@ class InfoPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         onTap: () async {
-                          LaunchReview.launch(
-                              androidAppId: "app.openauthenticator",
-                              iOSAppId: "585027354");
+                          LaunchReview.launch(iOSAppId: "6737689193");
                         },
                         child: Container(
                           width: 310.w,
                           height: 55.h,
                           decoration: BoxDecoration(
-                              color: Color(0xFF931E1E),
+                              color: const Color(0xFF931E1E),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12.r))),
                           child: Row(
@@ -204,7 +206,7 @@ class InfoPage extends StatelessWidget {
                                 size: 32.h,
                                 color: Colors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                   width:
                                       8), // Добавьте немного пространства между иконкой и текстом
                               Expanded(
@@ -240,7 +242,7 @@ class InfoPage extends StatelessWidget {
                   },
                   child: CircleAvatar(
                     radius: 36.r,
-                    backgroundColor: Color(0xFF931E1E),
+                    backgroundColor: const Color(0xFF931E1E),
                     child: Center(
                       child: Icon(
                         IconsaxPlusLinear.house_2,

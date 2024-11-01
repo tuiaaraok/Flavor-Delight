@@ -52,9 +52,9 @@ class BakegGoodAdapter extends TypeAdapter<Bakeg_Good> {
     };
     return Bakeg_Good(
       date: fields[0] as String?,
-      good_bakeg: (fields[1] as List?)
+      goodBakeg: (fields[1] as List?)
           ?.map((dynamic e) => (e as Map).cast<String, String>())
-          ?.toList(),
+          .toList(),
     );
   }
 
@@ -65,7 +65,7 @@ class BakegGoodAdapter extends TypeAdapter<Bakeg_Good> {
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
-      ..write(obj.good_bakeg);
+      ..write(obj.goodBakeg);
   }
 
   @override
@@ -91,9 +91,9 @@ class BakegSoldAdapter extends TypeAdapter<Bakeg_Sold> {
     };
     return Bakeg_Sold(
       date: fields[0] as String?,
-      sold_bakeg: (fields[1] as List?)
+      soldBakeg: (fields[1] as List?)
           ?.map((dynamic e) => (e as Map).cast<String, String>())
-          ?.toList(),
+          .toList(),
     );
   }
 
@@ -104,7 +104,7 @@ class BakegSoldAdapter extends TypeAdapter<Bakeg_Sold> {
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
-      ..write(obj.sold_bakeg);
+      ..write(obj.soldBakeg);
   }
 
   @override
@@ -130,9 +130,9 @@ class BakegWriteOfAdapter extends TypeAdapter<Bakeg_Write_Of> {
     };
     return Bakeg_Write_Of(
       date: fields[0] as String?,
-      write_of_bakeg: (fields[1] as List?)
+      writeOfBakeg: (fields[1] as List?)
           ?.map((dynamic e) => (e as Map).cast<String, String>())
-          ?.toList(),
+          .toList(),
     );
   }
 
@@ -143,7 +143,7 @@ class BakegWriteOfAdapter extends TypeAdapter<Bakeg_Write_Of> {
       ..writeByte(0)
       ..write(obj.date)
       ..writeByte(1)
-      ..write(obj.write_of_bakeg);
+      ..write(obj.writeOfBakeg);
   }
 
   @override

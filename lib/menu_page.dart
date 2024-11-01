@@ -1,16 +1,14 @@
 import 'package:bakery/baked_page.dart';
-import 'package:bakery/data/bakeg.dart';
-import 'package:bakery/data/boxes.dart';
 import 'package:bakery/info_page.dart';
 import 'package:bakery/recipes_page.dart';
 import 'package:bakery/sold_baked_page.dart';
 import 'package:bakery/write_of_bakeg.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
 
 class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
+
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
@@ -21,7 +19,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.only(top: MediaQuery.paddingOf(context).top),
-        child: Container(
+        child: SizedBox(
           width: double.infinity,
           height: double.infinity,
           child: Column(
@@ -43,20 +41,20 @@ class _MenuPageState extends State<MenuPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute<void>(
-                            builder: (BuildContext context) => InfoPage(),
+                            builder: (BuildContext context) => const InfoPage(),
                           ),
                         );
                       },
                       child: Text(
                         "Help",
                         style: TextStyle(
-                            fontSize: 24.sp, color: Color(0xFF931E1E)),
+                            fontSize: 24.sp, color: const Color(0xFF931E1E)),
                       ),
                     ),
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
                 padding: EdgeInsets.only(top: 59.h),
                 child: GestureDetector(
@@ -64,7 +62,7 @@ class _MenuPageState extends State<MenuPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => RecipesPage(),
+                        builder: (BuildContext context) => const RecipesPage(),
                       ),
                     );
                   },
@@ -75,7 +73,7 @@ class _MenuPageState extends State<MenuPage> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(12.r),
                         ),
-                        color: Color(0xFF931E1E)),
+                        color: const Color(0xFF931E1E)),
                     child: Center(
                         child: Text(
                       "Recipes",
@@ -91,7 +89,7 @@ class _MenuPageState extends State<MenuPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => BakedPage(),
+                        builder: (BuildContext context) => const BakedPage(),
                       ),
                     );
                   },
@@ -118,7 +116,7 @@ class _MenuPageState extends State<MenuPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => SoldBakedPage(),
+                        builder: (BuildContext context) => const SoldBakedPage(),
                       ),
                     );
                   },
@@ -129,7 +127,7 @@ class _MenuPageState extends State<MenuPage> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(12.r),
                         ),
-                        color: Color(0xFF931E1E)),
+                        color: const Color(0xFF931E1E)),
                     child: Center(
                         child: Text(
                       "Sold baked goods",
@@ -145,7 +143,7 @@ class _MenuPageState extends State<MenuPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute<void>(
-                        builder: (BuildContext context) => WriteOfBakeg(),
+                        builder: (BuildContext context) => const WriteOfBakeg(),
                       ),
                     );
                   },
@@ -156,7 +154,7 @@ class _MenuPageState extends State<MenuPage> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(12.r),
                         ),
-                        color: Color(0xFF931E1E)),
+                        color: const Color(0xFF931E1E)),
                     child: Center(
                         child: Text(
                       "Baked goods written off",
@@ -165,11 +163,11 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                 width: double.infinity,
                 height: 195.h,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image: AssetImage("assets/menu_page.png"))),
