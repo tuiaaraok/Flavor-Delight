@@ -205,6 +205,8 @@ class _SoldBakedPageState extends State<SoldBakedPage> {
                                       addbakeg = true;
 
                                       setState(() {});
+                                    } else {
+                                      showAlertDialog(context);
                                     }
                                   },
                                   child: CircleAvatar(
@@ -982,6 +984,33 @@ class _SoldBakedPageState extends State<SoldBakedPage> {
               ],
             );
           }),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("You haven't baked any pastries"),
+      content: Text("Go to the baking screen and enter the items you see."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

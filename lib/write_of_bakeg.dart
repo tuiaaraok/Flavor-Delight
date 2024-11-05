@@ -197,9 +197,10 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
                                   onTap: () {
                                     if (cards.isNotEmpty) {
                                       addbakeg = true;
-
-                                      setState(() {});
+                                    } else {
+                                      showAlertDialog(context);
                                     }
+                                    setState(() {});
                                   },
                                   child: CircleAvatar(
                                     radius: 45.r,
@@ -969,6 +970,33 @@ class _WriteOfBakegState extends State<WriteOfBakeg> {
               ],
             );
           }),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("You haven't baked any pastries"),
+      content: Text("Go to the baking screen and enter the items you see."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }
