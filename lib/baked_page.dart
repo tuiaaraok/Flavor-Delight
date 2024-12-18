@@ -81,7 +81,8 @@ class _BakedPageState extends State<BakedPage> {
                                 child: CircleAvatar(
                                   radius: 27.r,
                                   backgroundColor: addbakeg
-                                      ? const Color(0xFF931E1E).withOpacity(0.5)
+                                      ? const Color(0xFF931E1E)
+                                          .withValues(alpha: 0.5)
                                       : const Color(0xFF931E1E),
                                   child: Icon(
                                     IconsaxPlusLinear.house_2,
@@ -200,7 +201,7 @@ class _BakedPageState extends State<BakedPage> {
                                                 "You don't have any Sold baked goods.",
                                                 style: TextStyle(
                                                     color: Colors.white
-                                                        .withOpacity(0.5),
+                                                        .withValues(alpha: 0.5),
                                                     fontSize: 20.sp),
                                               ),
                                             ],
@@ -237,7 +238,7 @@ class _BakedPageState extends State<BakedPage> {
                         child: Container(
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 0.8,
-                          color: Colors.transparent.withOpacity(0.3),
+                          color: Colors.transparent.withValues(alpha: 0.3),
                           child: Center(
                             child: Container(
                               width: 290.w,
@@ -296,7 +297,7 @@ class _BakedPageState extends State<BakedPage> {
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(12.r)),
                                               color: const Color(0xFFD9D9D9)
-                                                  .withOpacity(0.25),
+                                                  .withValues(alpha: 0.25),
                                               border: Border.all(
                                                   color:
                                                       const Color(0xFF6C6D33),
@@ -317,7 +318,8 @@ class _BakedPageState extends State<BakedPage> {
                                                         fontWeight:
                                                             FontWeight.bold,
                                                         color: Colors.white
-                                                            .withOpacity(0.25),
+                                                            .withValues(
+                                                                alpha: 0.25),
                                                         fontSize: 18.sp)),
                                                 keyboardType:
                                                     TextInputType.datetime,
@@ -344,8 +346,8 @@ class _BakedPageState extends State<BakedPage> {
                                         child: Text(
                                           "Quantity of baked goods",
                                           style: TextStyle(
-                                              color:
-                                                  Colors.white.withOpacity(0.5),
+                                              color: Colors.white
+                                                  .withValues(alpha: 0.5),
                                               fontSize: 20.sp),
                                         ),
                                       ),
@@ -369,7 +371,7 @@ class _BakedPageState extends State<BakedPage> {
                                                           Radius.circular(
                                                               12.r)),
                                                   color: const Color(0xFFD9D9D9)
-                                                      .withOpacity(0.25),
+                                                      .withValues(alpha: 0.25),
                                                   border: Border.all(
                                                       color: const Color(
                                                           0xFF6C6D33),
@@ -394,7 +396,8 @@ class _BakedPageState extends State<BakedPage> {
                                                   hintStyle: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white
-                                                        .withOpacity(0.5),
+                                                        .withValues(
+                                                            alpha: 0.25),
                                                     fontSize: 18.sp,
                                                   ),
                                                 ),
@@ -421,7 +424,7 @@ class _BakedPageState extends State<BakedPage> {
                                                           Radius.circular(
                                                               12.r)),
                                                   color: const Color(0xFFD9D9D9)
-                                                      .withOpacity(0.25),
+                                                      .withValues(alpha: 0.25),
                                                   border: Border.all(
                                                       color: const Color(
                                                           0xFF6C6D33),
@@ -450,7 +453,8 @@ class _BakedPageState extends State<BakedPage> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.white
-                                                          .withOpacity(0.5),
+                                                          .withValues(
+                                                              alpha: 0.5),
                                                       fontSize: 18.sp,
                                                     ),
                                                   ),
@@ -694,7 +698,7 @@ class _BakedPageState extends State<BakedPage> {
                         ? Container(
                             width: double.infinity,
                             height: 840.h,
-                            color: Colors.transparent.withOpacity(0.3),
+                            color: Colors.transparent.withValues(alpha: 0.3),
                             child: Center(
                               child: Container(
                                 width: 290.w,
@@ -750,7 +754,7 @@ class _BakedPageState extends State<BakedPage> {
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(12.r)),
                                                 color: const Color(0xFFD9D9D9)
-                                                    .withOpacity(0.25),
+                                                    .withValues(alpha: 0.25),
                                                 border: Border.all(
                                                     color:
                                                         const Color(0xFF6C6D33),
@@ -781,7 +785,7 @@ class _BakedPageState extends State<BakedPage> {
                                             "Quantity of baked goods",
                                             style: TextStyle(
                                                 color: Colors.white
-                                                    .withOpacity(0.5),
+                                                    .withValues(alpha: 0.5),
                                                 fontSize: 20.sp),
                                           ),
                                         ),
@@ -809,7 +813,8 @@ class _BakedPageState extends State<BakedPage> {
                                                                 12.r)),
                                                     color:
                                                         const Color(0xFFD9D9D9)
-                                                            .withOpacity(0.25),
+                                                            .withValues(
+                                                                alpha: 0.25),
                                                     border: Border.all(
                                                         color: const Color(
                                                             0xFF6C6D33),
@@ -835,7 +840,8 @@ class _BakedPageState extends State<BakedPage> {
                                                                 12.r)),
                                                     color:
                                                         const Color(0xFFD9D9D9)
-                                                            .withOpacity(0.25),
+                                                            .withValues(
+                                                                alpha: 0.25),
                                                     border: Border.all(
                                                         color: const Color(
                                                             0xFF6C6D33),
@@ -931,7 +937,7 @@ class YourWidget extends StatelessWidget {
         ? Container(
             width: double.infinity,
             height: 840.h,
-            color: Colors.transparent.withOpacity(0.3),
+            color: Colors.transparent.withValues(alpha: 0.3),
             child: Center(
               child: Container(
                 width: 290.w,

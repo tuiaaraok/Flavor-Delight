@@ -88,7 +88,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                       radius: 27.r,
                                       backgroundColor: addrecept
                                           ? const Color(0xFF931E1E)
-                                              .withOpacity(0.5)
+                                              .withValues(alpha: 0.5)
                                           : const Color(0xFF931E1E),
                                       child: Icon(
                                         IconsaxPlusLinear.house_2,
@@ -148,7 +148,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                                           Radius.circular(
                                                               12.r)),
                                                   color: const Color(0xFFD9D9D9)
-                                                      .withOpacity(0.25),
+                                                      .withValues(alpha: 0.25),
                                                 ),
                                                 child: Padding(
                                                   padding: EdgeInsets.symmetric(
@@ -179,7 +179,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                                 12.r)),
                                                     color:
                                                         const Color(0xFFD9D9D9)
-                                                            .withOpacity(0.25),
+                                                            .withValues(
+                                                                alpha: 0.25),
                                                   ),
                                                   child: Padding(
                                                       padding:
@@ -308,7 +309,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                               Radius.circular(12.r)),
                                           // ignore: use_full_hex_values_for_flutter_colors
                                           color: const Color(0xffdd9d9d9)
-                                              .withOpacity(0.25),
+                                              .withValues(alpha: 0.25),
                                         ),
                                         child: Padding(
                                           padding: EdgeInsets.symmetric(
@@ -328,7 +329,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.white
-                                                          .withOpacity(0.25),
+                                                          .withValues(
+                                                              alpha: 0.25),
                                                       fontSize: 18.sp)),
                                               keyboardType: TextInputType.text,
                                               cursorColor: Colors.transparent,
@@ -353,7 +355,7 @@ class _RecipesPageState extends State<RecipesPage> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(12.r)),
                                             color: const Color(0xFFD9D9D9)
-                                                .withOpacity(0.25),
+                                                .withValues(alpha: 0.25),
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
@@ -378,7 +380,8 @@ class _RecipesPageState extends State<RecipesPage> {
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       color: Colors.white
-                                                          .withOpacity(0.25),
+                                                          .withValues(
+                                                              alpha: 0.25),
                                                       fontSize: 18.sp)),
                                               cursorColor:
                                                   const Color(0xFF6C6D33),
