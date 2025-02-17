@@ -17,17 +17,29 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,49 +52,12 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCQQTAO4Bbi8LdRBCCLGDf0KTWDV4e9un4',
-    appId: '1:78416144642:web:b2081bf7f128603c73ba1b',
-    messagingSenderId: '78416144642',
-    projectId: 'flavor-delight',
-    authDomain: 'flavor-delight.firebaseapp.com',
-    storageBucket: 'flavor-delight.firebasestorage.app',
-    measurementId: 'G-F1J6S6EYSV',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBkiP0ZZyZYKJ9-dCDX3JWTwjAvhM3W7sk',
-    appId: '1:78416144642:android:8803ed447869caa173ba1b',
-    messagingSenderId: '78416144642',
-    projectId: 'flavor-delight',
-    storageBucket: 'flavor-delight.firebasestorage.app',
-  );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCdouHE5RRojQwB_GOtsWTbqlLDZTuX-Fg',
-    appId: '1:78416144642:ios:a25c5ae2f7a6a74973ba1b',
-    messagingSenderId: '78416144642',
-    projectId: 'flavor-delight',
-    storageBucket: 'flavor-delight.firebasestorage.app',
+    apiKey: 'AIzaSyAHICdBTriZebLdkr8TuCYXoe26ZojLtxk',
+    appId: '1:632018782161:ios:d61e79ae73b6f7607b42f0',
+    messagingSenderId: '632018782161',
+    projectId: 'flavor-delight-d79bd',
+    storageBucket: 'flavor-delight-d79bd.firebasestorage.app',
     iosBundleId: 'com.sweetrise.WV54Application',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCdouHE5RRojQwB_GOtsWTbqlLDZTuX-Fg',
-    appId: '1:78416144642:ios:b4dbbdc254de053a73ba1b',
-    messagingSenderId: '78416144642',
-    projectId: 'flavor-delight',
-    storageBucket: 'flavor-delight.firebasestorage.app',
-    iosBundleId: 'com.example.bakery',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCQQTAO4Bbi8LdRBCCLGDf0KTWDV4e9un4',
-    appId: '1:78416144642:web:db9d59c368b01ca373ba1b',
-    messagingSenderId: '78416144642',
-    projectId: 'flavor-delight',
-    authDomain: 'flavor-delight.firebaseapp.com',
-    storageBucket: 'flavor-delight.firebasestorage.app',
-    measurementId: 'G-ZGZ3SPR93X',
   );
 }
